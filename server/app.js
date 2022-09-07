@@ -4,6 +4,7 @@ import cors from 'cors';
 import dbConnector from './db/dbConnector.js';
 import notFoundMiddleware from './middleware/notFound.js';
 import errorHandlerMiddleware from './middleware/errorHandler.js';
+import * as routers from './routes/index.js'
 
 dotenv.config();
 
@@ -13,13 +14,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+//routers
+app.use('/api/v1/auth', routers.authRouters);
+app.use('/api/v1/jobs', routers.jobsRouters);
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 dbConnector(process.env.MONGO_DB_URL)
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`Derver run on porn: ${PORT}`);
+      console.log(`Server run on porn: ${PORT}`);
     })
   })
   .catch((error) => console.log(error));

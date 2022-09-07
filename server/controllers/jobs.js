@@ -1,4 +1,4 @@
-export const getAllGobs = async (req, resp) => {
+export const getAllJobs = async (req, resp) => {
   resp.send('getAllJobs controller')
 };
 

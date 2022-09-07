@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const dbConnector = (url) => {
   return mongoose.connect(url)
-    .then(() => 'Connect to DB is success')
+    .then(() => console.log('Connect to DB is success'))
     .catch((error) => console.log(error));
 };
 
