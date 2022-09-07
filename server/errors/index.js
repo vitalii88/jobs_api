@@ -1,7 +1,11 @@
 import CustomApiError from './CustomApiError.js';
-import Authenticated from './Authenticated.js';
+import AuthenticatedError from './Authenticated.js';
+import BadRequestError from './BadRequest.js';
+import NotFoundError from './NotFound.js';
 
 export {
-  Authenticated,
+  AuthenticatedError,
+  BadRequestError,
   CustomApiError,
+  NotFoundError,
 }
