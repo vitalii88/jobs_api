@@ -6,8 +6,7 @@ const errorHandlerMiddleware = (error, req, resp, next) => {
     return resp.status(error.statusCode).json({ msg: error.message });
   }
 
-  return resp.status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .send('Something went wrong try again later');
+  return resp.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
 }
 
 export default errorHandlerMiddleware;

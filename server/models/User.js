@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -20,8 +21,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please, provide password'],
     minLength: 3,
-    maxLength: 20,
   }
 });
+
+UserSchema.pre('save', async function(){
+  const sult = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, sult);
+})
 
 export default mongoose.model('User', UserSchema);
