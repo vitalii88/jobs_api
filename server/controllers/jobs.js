@@ -6,7 +6,7 @@ export const getJod = async (req, resp) => {
   resp.send('getJod controller')
 };
 export const createJob = async (req, resp) => {
-  resp.send('createJob controller')
+  resp.json(req.user);
 };
 export const updateJob = async (req, resp) => {
   resp.send('updateJob controller')

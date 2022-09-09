@@ -5,6 +5,7 @@ import dbConnector from './db/dbConnector.js';
 import notFoundMiddleware from './middleware/notFound.js';
 import errorHandlerMiddleware from './middleware/errorHandler.js';
 import * as routers from './routes/index.js'
+import authMiddleware from './middleware/authentication.js';
 
 dotenv.config();
 
@@ -12,11 +13,11 @@ const PORT = process.env.PORT || 5001;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 
 //routers
 app.use('/api/v1/auth', routers.authRouters);
-app.use('/api/v1/jobs', routers.jobsRouters);
+app.use('/api/v1/jobs', authMiddleware, routers.jobsRouters);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
