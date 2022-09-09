@@ -1,12 +1,12 @@
-import { CustomApiError } from '../errors/index.js';
+import CustomApiError from '../errors/CustomApiError.js';
 import { StatusCodes } from 'http-status-codes';
 
-const errorHandlerMiddleware = (error, req, resp, next) => {
-  if (error instanceof CustomApiError) {
-    return resp.status(error.statusCode).json({ msg: error.message });
+const errorHandlerMiddleware = (err, req, resp, next) => {
+  if (err instanceof CustomApiError) {
+    return resp.status(err.statusCode).json({ msg: err.message });
   }
 
-  return resp.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
+  return resp.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
 }
 
 export default errorHandlerMiddleware;

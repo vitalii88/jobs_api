@@ -25,6 +25,11 @@ export const login = async (req, resp) => {
   if (!user) {
     throw new AuthenticatedError('Invalid credentials');
   }
+
+  const isCorrectPassword = await user.comparePassword(password);
+  console.log('isCorrectPassword: ', isCorrectPassword);
+
+
   const token = user.createJWT();
   resp.status(StatusCodes.OK).json({
     user: {
