@@ -1,7 +1,6 @@
 import Job from '../models/Job.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
-import Jobs from '../routes/jobs.js';
 
 export const getAllJobs = async (req, resp) => {
   const jobs = await Job.find({ createdBy: req.user.userId }).sort('createdAt');
@@ -9,7 +8,19 @@ export const getAllJobs = async (req, resp) => {
 };
 
 export const getJod = async (req, resp) => {
-  resp.send('getJod controller')
+  const {
+    user: { userId },
+    params: { id: jobId}
+  } = req;
+  const job = await Job.findOne({
+    _id: jobId,
+    createdBy: userId,
+  });
+  if (!job) {
+    throw new NotFoundError(`Not foun job from id:  ${jobId}`);
+  }
+  resp.status(StatusCodes.OK).json({ job });
+
 };
 export const createJob = async (req, resp) => {
   req.body.createdBy = req.user.userId;
