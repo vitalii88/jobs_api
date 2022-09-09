@@ -24,7 +24,7 @@ app.use(errorHandlerMiddleware);
 dbConnector(process.env.MONGO_DB_URL)
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`Server run on porn: ${PORT}`);
-    })
-  })
-  .catch((error) => console.log(error));
+      console.log(`server run on porn: ${PORT}`);
+    });
+  }).catch((error) => console.log(error));
+
