@@ -4,7 +4,8 @@ import { BadRequestError, NotFoundError } from '../errors/index.js';
 import Jobs from '../routes/jobs.js';
 
 export const getAllJobs = async (req, resp) => {
-  resp.send('getAllJobs controller')
+  const job = await Job.find({ createdBy: req.user.userId }).sort('createdAt');
+  resp.status(StatusCodes.OK).json({ job });
 };
 
 export const getJod = async (req, resp) => {
