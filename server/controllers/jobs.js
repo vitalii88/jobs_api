@@ -52,6 +52,20 @@ export const updateJob = async (req, resp) => {
 };
 
 export const deleteJod = async (req, resp) => {
-  resp.send('deleteJod controller')
+  const {
+    user: { userId },
+    params: { id: jobId}
+  } = req;
+
+  const job = await Job.findOneAndRemove({
+    _id: jobId,
+    createdBy: userId,
+  });
+
+  if (!job) {
+    throw new NotFoundError(`Not found job from id: ${jobId}`);
+  }
+
+  resp.status(StatusCodes.OK).send();
 };
 
