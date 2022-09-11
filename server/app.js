@@ -1,6 +1,10 @@
 import * as dotenv from 'dotenv';
+import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import xss from 'xss-clean'
+import rateLimit from 'express-rate-limit';
 import dbConnector from './db/dbConnector.js';
 import notFoundMiddleware from './middleware/notFound.js';
 import errorHandlerMiddleware from './middleware/errorHandler.js';
@@ -12,8 +16,18 @@ dotenv.config();
 const PORT = process.env.PORT || 5001;
 
 const app = express();
+
+app.set('trust proxy', 1);
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 100,
+    max: 100,
+  })
+);
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
+app.use(helmet());
+app.use(xss());
 
 //routers
 app.use('/api/v1/auth', routers.authRouters);
