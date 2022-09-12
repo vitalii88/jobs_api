@@ -17,9 +17,9 @@ export const register = async (req, resp) => {
 export const login = async (req, resp) => {
   const { email, password } = req.body;
 
-  // if (!email || !password) {
-  //   throw new BadRequestError('Please provide email or password');
-  // }
+  if (!email || !password) {
+    throw new BadRequestError('Please provide email or password');
+  }
   const user = await UserSchema.findOne({ email });
 
   if (!user) {
@@ -27,8 +27,6 @@ export const login = async (req, resp) => {
   }
 
   const isCorrectPassword = await user.comparePassword(password);
-  console.log('isCorrectPassword: ', isCorrectPassword);
-
 
   const token = user.createJWT();
   resp.status(StatusCodes.OK).json({

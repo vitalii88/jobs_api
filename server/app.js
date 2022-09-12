@@ -30,6 +30,7 @@ app.use(helmet());
 app.use(xss());
 
 //routers
+
 app.use('/api/v1/auth', routers.authRouters);
 app.use('/api/v1/jobs', authMiddleware, routers.jobsRouters);
 
